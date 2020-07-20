@@ -1,0 +1,23 @@
+{
+  "name": "exxample",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000n\u0000o\u0000d\u0000e\u0000j\u0000s\u0000-\u0000s\u0000i\u0000m\u0000p\u0000l\u0000e\u0000-\u0000b\u0000l\u0000o\u0000g\u0000\r\u0000 \u0000",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Samk13/nodejs-simple-blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Samk13/nodejs-simple-blog/issues"
+  },
+  "homepage": "https://github.com/Samk13/nodejs-simple-blog#readme",
+  "dependencies": {
+    "lodash": "^4.17.19"
+  }
+}
