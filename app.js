@@ -1,4 +1,6 @@
 const express = require('express')
+const morgan = require('morgan')
+
 
 // express app
 const app = express()
@@ -9,6 +11,10 @@ app.set('view engine', 'ejs')
 // listning for requests
 const port = 3000
 app.listen(port)
+
+// adding middelware
+// loging information about req
+app.use(morgan('dev'))
 
 const blogs = [
     {title: 'Sam', snippet : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit'},
@@ -36,5 +42,5 @@ app.get('/about-us', (req, res) => {
 
 // 404 page
 app.use((req, res) => {
-    res.status(404).render('404')
+    res.status(404).render('404', { title: '404'})
 })

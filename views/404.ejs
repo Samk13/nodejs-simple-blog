@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include('./partials/head.ejs')%>
-<body>
+<body class="bg-gray-700">
     <%- include('./partials/nav.ejs') %>
-    <h1>404 NOT FOUND!</h1>
+    <div class="container mx-auto h-screen bg-gray-200 rounded-lg">
+        <p class="text-center p-5 font-black text-5xl">
+            404 can't find this page!
+        </p>
+        <a href="/" class="font-bold hover:text-blue-800 bg-green-600 p-4 shadow-md rounded-full ml-5 mt-4">back Home</a>
+    </div>
     <%- include('./partials/footer.ejs')%>
 </body>
 </html>
