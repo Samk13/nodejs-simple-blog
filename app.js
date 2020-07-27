@@ -47,6 +47,7 @@ app.use(morgan('dev'))
 //     .then((result)=> res.send(result))
 //     .catch( e => console.log(e))
 // })
+const string = 'sjds' + 'lasdjf' +  blogs
 
 const blogs = [
     {title: 'Sam', snippet : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit'},
