@@ -1,9 +1,9 @@
 const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
-const Blog = require('./models/blog')
-const { render } = require('ejs')
-const { add } = require('lodash')
+const router = require('./routes/blogRoutes')
+
+
 
 // express app
 const app = express()
@@ -15,7 +15,7 @@ mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
     .then((result)=>{
         console.group()
         console.warn('\x1b[34m','============================')
-        console.log('\x1b[33m%s\x1b[0m','==> connected to MongoDB <==')
+        console.log('\x1b[33m%s\x1b[0m',' ==> connected to MongoDB <==')
         console.warn('\x1b[34m','============================')
         console.groupEnd()
         app.listen(port)
@@ -27,64 +27,31 @@ app.set('view engine', 'ejs')
 
 // adding middelware
 app.use(express.static('public'))
-// the middelware urlencoded is responsible about parsing the POST req without this the post req will not work
+// this middelware urlencoded is responsible about parsing the POST req without this the post req will not work
 app.use(express.urlencoded({ extended: true }))
-
 // loging information about req
 app.use(morgan('dev'))
-
-// routes
-app.get('/', (req, res) => {
-    // res.render('index',{ title: 'Home', blogs})
+// rigestering the router
+router.get('/', (req, res) => {
     res.redirect('/blogs')
 })
+app.use('/blogs', router)
 
+//about 
 app.get('/about',(req, res) => {
     res.render('about',{title: 'about'})
 })
 
-app.get('/blogs/create',(req, res) => {
-    res.render('create', {title: 'create blog'})
-})
-
-app.get('/blogs',(req, res)=>{
-    Blog.find().sort({createdAt: -1})
-    .then((result)=>{
-        res.render('index.ejs',{title: 'All Blogs', blogs:result})
-    })
-    .catch((e)=> console.log(e))
-})
-
-// post handeler
-
-app.post('/blogs', (req, res) => {
-    const blog = new Blog(req.body)
-    blog.save()
-        .then(result => res.redirect('/blogs'))
-        .catch(e => console.error(e))
-})
-
-app.get('/blogs/:id', (req, res) => {
-    const id = req.params.id
-    Blog.findById(id)
-        .then(result => {
-            res.render('details', {blog: result, title: 'Blog detail'})
-        })
-        .catch(e => console.error(e))
-})
-// TODO make delete works 
-app.delete('/blogs/:id', (req, res) =>{
-    const id = req.params.id
-    Blog.findByIdAndDelete(id)
-    .then(()=>{
-        res.json({redirect: '/blogs'})
-    })
-    .catch(e  => console.log(e))
-})
-// redirect
-app.get('/about-us', (req, res) => {
-    res.redirect('/about')
-})
+// routes
+app.get('/', (req, res) => {
+    res.redirect('/blogs');
+  });
+  
+  app.get('/about', (req, res) => {
+    res.render('about', { title: 'About' });
+  });
+// blog routes
+app.use('/blogs', router);
 
 // 404 page
 app.use((req, res) => {
