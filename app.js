@@ -1,7 +1,10 @@
 const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
-const Blog = require('./models/blog') 
+const Blog = require('./models/blog')
+const { render } = require('ejs')
+const { add } = require('lodash')
+
 // express app
 const app = express()
 const port = 3000
@@ -9,51 +12,26 @@ const port = 3000
 // connect to mango db
 const dbURI = 'mongodb+srv://samk13:samk131313@cluster0-fwftc.gcp.mongodb.net/nodejs-simple-blog?retryWrites=true&w=majority'
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
-.then((result)=>{
-    console.log('connected to Mongo DB')
-    app.listen(port)
-})
-.catch(e => console.log(e))
+    .then((result)=>{
+        console.group()
+        console.warn('\x1b[34m','============================')
+        console.log('\x1b[33m%s\x1b[0m','==> connected to MongoDB <==')
+        console.warn('\x1b[34m','============================')
+        console.groupEnd()
+        app.listen(port)
+    })
+    .catch(e => console.log(e))
+
 // register view engine
 app.set('view engine', 'ejs')
 
 // adding middelware
+app.use(express.static('public'))
+// the middelware urlencoded is responsible about parsing the POST req without this the post req will not work
+app.use(express.urlencoded({ extended: true }))
 
 // loging information about req
 app.use(morgan('dev'))
-
-// mongoose and mongo sandbox routes
-// app.get('/add-blog', (req, res) => {
-//     const blog = new Blog({
-//         title: 'new Blog 2',
-//         snippet : 'about this blog',
-//         body: 'a  body for the blog '
-//     })
-//     blog.save()
-//     .then((result) => {
-//         res.send(result)
-//     })
-//     .catch(err => console.log(err))
-// })
-
-// app.get('/all-blogs', (req, res)=> {
-//     Blog.find()
-//     .then((result) => res.send(result))
-//     .catch(e => console.log(e))
-// })
-
-// app.get('/single-blog', (req, res)=> {
-//     Blog.findById('5f16542c2ceb2d0870f70de7')
-//     .then((result)=> res.send(result))
-//     .catch( e => console.log(e))
-// })
-
-const blogs = [
-    {title: 'Sam', snippet : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit'},
-    {title: 'Sam', snippet : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit'},
-    {title: 'Sam', snippet : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit'},
-    {title: 'Sam', snippet : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit'}
-]
 
 // routes
 app.get('/', (req, res) => {
@@ -77,7 +55,33 @@ app.get('/blogs',(req, res)=>{
     .catch((e)=> console.log(e))
 })
 
-// redirect 
+// post handeler
+
+app.post('/blogs', (req, res) => {
+    const blog = new Blog(req.body)
+    blog.save()
+        .then(result => res.redirect('/blogs'))
+        .catch(e => console.error(e))
+})
+
+app.get('/blogs/:id', (req, res) => {
+    const id = req.params.id
+    Blog.findById(id)
+        .then(result => {
+            res.render('details', {blog: result, title: 'Blog detail'})
+        })
+        .catch(e => console.error(e))
+})
+// TODO make delete works 
+app.delete('/blogs/:id', (req, res) =>{
+    const id = req.params.id
+    Blog.findByIdAndDelete(id)
+    .then(()=>{
+        res.json({redirect: '/blogs'})
+    })
+    .catch(e  => console.log(e))
+})
+// redirect
 app.get('/about-us', (req, res) => {
     res.redirect('/about')
 })

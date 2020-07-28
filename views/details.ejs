@@ -1,0 +1,46 @@
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+<body class="bg-gray-700">
+    <%- include('./partials/nav.ejs') %>
+    <div class="container mx-auto h-screen bg-gray-200 rounded-lg p-4 m-3">
+        <div class="md:w-full max-w-3xl md:mx-auto max-h-3xl md:m-10 h-auto border-solid border border-gray-600 p-3 md:rounded-lg hover:shadow bg-green-100">
+                <h3
+                class="text-5xl font-bold p-2"
+                ><%= blog.title%></h3>
+                <p 
+                class="text-xl p-2"
+                ><%= blog.snippet %></p>
+                <p 
+                class="font-thin text-lg p-2 mb-10 whitespace-normal"
+                ><%= blog.body %></p>
+            <div class="p-6 border-solid border-t border-gray-600">
+                <a 
+                href="/blogs"
+                class="delete py-3 px-8 mr-3 bg-green-700 shadow-md cursor-pointer rounded-full hover:bg-green-500 text-white hover:shadow-xl font-bold"
+                >
+                Back
+            </a>
+                <a 
+                class="delete py-3 px-8 bg-red-700 shadow-md cursor-pointer rounded-full hover:bg-red-600 text-white hover:shadow-xl font-bold"
+                data-doc="<%= blog._id %>"
+                >
+                Delete
+            </a>
+        </div>
+    </div>
+</div>
+    <%- include('./partials/footer.ejs')%>
+    <script>
+        const trashcan = document.querySelector('a.delete')
+        trashcan.addEventListener('click', (e) => {
+            const endPoint = `/blogs/${trashcan.dataset.doc}`
+            fetch(endPoint, {
+                method: 'DELETE'
+            })
+            .then((res)=> res.json())
+            .then((data) => console.log(data))
+            .catch(e => console.log(e))
+        })
+    </script>
+</body>
+</html>
