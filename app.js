@@ -13,7 +13,11 @@ const port = 3000
 const dbURI = 'mongodb+srv://samk13:samk131313@cluster0-fwftc.gcp.mongodb.net/nodejs-simple-blog?retryWrites=true&w=majority'
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
     .then((result)=>{
-        console.log('connected to Mongo DB')
+        console.group()
+        console.warn('\x1b[34m','============================')
+        console.log('\x1b[33m%s\x1b[0m','==> connected to MongoDB <==')
+        console.warn('\x1b[34m','============================')
+        console.groupEnd()
         app.listen(port)
     })
     .catch(e => console.log(e))
@@ -75,7 +79,7 @@ app.delete('/blogs/:id', (req, res) =>{
     .then(()=>{
         res.json({redirect: '/blogs'})
     })
-    .catch(e => console.log(e))
+    .catch(e  => console.log(e))
 })
 // redirect
 app.get('/about-us', (req, res) => {
