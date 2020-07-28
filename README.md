@@ -1,9 +1,10 @@
 ﻿# nodejs-simple-blog 
 
-# how to run this : 
+# how to run this: 
 
-1- 
-====
-make sure to create.env file and add your own database uri
-
+### 1- make sure to create.env file and add your own database uri
+```terminal
+npm i
+nodemon ./app.js
+```
 
