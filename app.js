@@ -71,7 +71,7 @@ app.get('/blogs/:id', (req, res) => {
 // TODO make delete works 
 app.delete('/blogs/:id', (req, res) =>{
     const id = req.params.id
-    Blog.findById(id)
+    Blog.findByIdAndDelete(id)
     .then(()=>{
         res.json({redirect: '/blogs'})
     })
