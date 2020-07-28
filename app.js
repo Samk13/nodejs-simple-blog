@@ -8,16 +8,17 @@ const router = require('./routes/blogRoutes')
 
 // express app
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 // connect to mango db
 const dbURI = process.env.URI
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
     .then((result)=>{
         console.group()
-        console.warn('\x1b[34m','============================')
-        console.log('\x1b[33m%s\x1b[0m',' ==> connected to MongoDB <==')
-        console.warn('\x1b[34m','============================')
+        console.warn('\x1b[34m','====================================')
+        console.log('\x1b[33m%s\x1b[0m',' ==>     connected to MongoDB     <==')
+        console.log('\x1b[33m%s\x1b[0m',` ==> starting server at port ${port} <==`)
+        console.warn('\x1b[34m','====================================')
         console.groupEnd()
         app.listen(port)
     })
