@@ -14,14 +14,19 @@
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Blog title</label>
                 <input 
-                class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
-                type="text" id="title" required>
+                    class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+                    type="text" 
+                    id="title"
+                    name="title"
+                    required
+                >
             </div>
             <label for="snippet">Blog snippet</label>
             <input 
                 class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal" 
                 type="text" 
-                id="snippet" 
+                id="snippet"
+                name="snippet"
                 required
             >
             <label for="body">Blog body</label>
@@ -29,7 +34,8 @@
                 class="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal" 
                 id="body" 
                 cols="30" 
-                rows="10" 
+                rows="10"
+                name="body"
                 required
             ></textarea>
             <button class="mt-3 bg-green-600 hover:bg-orange-600 text-white hover:shadow-md font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Submit</button>
