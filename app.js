@@ -1,4 +1,5 @@
 const express = require('express')
+require('dotenv/config')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const router = require('./routes/blogRoutes')
@@ -10,7 +11,7 @@ const app = express()
 const port = 3000
 
 // connect to mango db
-const dbURI = 'mongodb+srv://samk13:samk131313@cluster0-fwftc.gcp.mongodb.net/nodejs-simple-blog?retryWrites=true&w=majority'
+const dbURI = process.env.URI
 mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
     .then((result)=>{
         console.group()
